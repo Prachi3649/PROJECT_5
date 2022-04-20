@@ -19,7 +19,7 @@ const postOrder = async (req, res) => {
         const isCartExist = await cartModel.findOne({userId:userId});
         if(!isCartExist){
           return res.status(404).send({status: false, message: "user does not have a cart"})
-      }
+        }
 
         const data = req.body
         if (!validator.isValidObject(data)){
@@ -58,18 +58,18 @@ const upadateOrder = async function (req, res) {
       let cartExist = await cartModel.findOne({userId:userId});
       if (!cartExist) {
         return res
-          .status(400)
+          .status(404)
           .send({ status: false, message: "This user have no card till Now" });
       }
       let findOrder = await orderModel.findById(orderId);
       if (!findOrder) {
         return res
-          .status(400)
+          .status(404)
           .send({ status: false, message: "Order in not found with this Id" });
       }
       if (userId != findOrder.userId) {
         return res
-          .status(400)
+          .status(403)
           .send({ status: false, message: "User is not autherized to do changes" });
       }
       if (findOrder.cancellable == true && findOrder.status == "pending" && findOrder.isDeleted == false) {
@@ -90,11 +90,7 @@ const upadateOrder = async function (req, res) {
         .status(400)
         .send({
           status: false,
-<<<<<<< HEAD
-          message: "order is not canclable or product is deleted",
-=======
           message: "order is not canclable or product is alerady deleted",
->>>>>>> b5d1d3ad47beb48636d166f6da9061d36cd0d205
       });
     }catch(error){
       return res.status(500).send({status: false, message: error.message})
