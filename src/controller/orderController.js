@@ -23,7 +23,7 @@ const postOrder = async (req, res) => {
 
         const data = req.body
         if (!validator.isValidObject(data)){
-            return res.status(404).send({status: false, message: "enter data"})
+            return res.status(400).send({status: false, message: "enter data"})
         }
         let {items, totalPrice, totalItems} = data
         if (typeof(items) == "string"){
