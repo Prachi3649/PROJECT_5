@@ -83,7 +83,7 @@ const createCart = async function(req, res) {
          }
         let createCart = await cartModel.create({userId:userId,items:items,totalPrice:totalPrice,totalItems:items.length })
         
-        return res.status(200).send({status:true,data:createCart})
+        return res.status(201).send({status:true,data:createCart})
      } if(isCartExist){
           items2 = isCartExist.items
      }
@@ -107,7 +107,7 @@ const createCart = async function(req, res) {
             items2.push(items[0])
         }
        let updateCart = await cartModel.findOneAndUpdate({userId:userId},{$set:{items:items2,totalPrice:totalPrice2,totalItems:items2.length}},{new:true})
-               return res.send(updateCart)
+        return res.status(200).send({status: true,data:updateCart})
    }catch (error) {
     return res.status(500).send({ status: false, ERROR: error.message })
 }
