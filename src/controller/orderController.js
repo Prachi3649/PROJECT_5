@@ -25,10 +25,14 @@ const postOrder = async (req, res) => {
         if (!validator.isValidObject(data)){
             return res.status(404).send({status: false, message: "enter data"})
         }
-        const {items, totalPrice, totalItems} = data
+        let {items, totalPrice, totalItems} = data
+        if (typeof(items) == "string"){
+          data.items = JSON.parse(items)
+        }
+        // return res.send(data.items)
         let todtalQuantity = 0
-        for(let i = 0; i < items.length; i++){
-          todtalQuantity = todtalQuantity + items[i].quantity
+        for(let i = 0; i < data.items.length; i++){
+          todtalQuantity = todtalQuantity + data.items[i].quantity
         }
         data.totalQuantity = todtalQuantity
         data.userId = userId
