@@ -106,7 +106,9 @@ const createCart = async function(req, res) {
         if(flag == 0){
             items2.push(items[0])
         }
-       let updateCart = await cartModel.findOneAndUpdate({userId:userId},{$set:{items:items2,totalPrice:totalPrice2,totalItems:items2.length}},{new:true})
+       let updateCart = await cartModel.findOneAndUpdate({userId:userId},
+        {$set:{items:items2,totalPrice:totalPrice2,totalItems:items2.length}},
+        {new:true})
         return res.status(200).send({status: true,data:updateCart})
    }catch (error) {
     return res.status(500).send({ status: false, ERROR: error.message })
@@ -155,7 +157,7 @@ const updateCart = async (req, res) => {
 
         const getProduct = await productModel.findById({ _id: productId })
         if ((!getProduct) || (getProduct.isDeleted == true)) {
-            return res.status(404).send({ status: false, message: "Product not found" })
+            return res.status(404).send({ status: false, message: "Product not found ++++ " })
         }
 
         const getCart = await cartModel.findOne({ _id: cartId })
@@ -171,18 +173,18 @@ const updateCart = async (req, res) => {
 
         let getQuantityOfProduct = 0
         let getProductIdOfItems = []
-        let productInCart = 0
+        let flag = 0
         for (i = 0; i < (getCart.items.length); i++) { // To get quantity of Selected Product
             if (getCart.items[i].productId == productId) {
                 getQuantityOfProduct = getCart.items[i].quantity
-                // getProductIdOfItems = getCart.items[i].productId
+                
                 getProductIdOfItems.push(getCart.items[i].productId)
-                productInCart = 1
+                flag = 1
 
                 
             }
         }
-        if(productInCart == 0){
+        if(flag == 0){
             return res.status(400).send({status:false, message:"There Is No Product in the Cart"})
         }
         let totalPriceOfSelectedProduct = getQuantityOfProduct * getProduct.price //  To get total price of select Product
@@ -227,9 +229,10 @@ const updateCart = async (req, res) => {
                         const response = await cartModel.findOneAndUpdate({ _id: cartId },
                              { items: getCart.items, totalItems: totalItems1, totalPrice: priceUpdate }, { new: true })
                         return res.status(200).send({ status: true, data: response })
-                    }
-                } else {
-                    return res.status(400).send({ status: false, message: `product doesnot exist` })
+                    } 
+                
+                // } else {
+                //     return res.status(400).send({ status: false, message: `product doesnot exist` })
                 }
             }
             

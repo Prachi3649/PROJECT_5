@@ -5,10 +5,20 @@ const authentication = async function  (req, res , next)
 {
     try {
         const token = req.header('Authorization', 'Bearer Token')
+        /**
+          jwt.verify(token, secretkey, function (error, decode) {
+      if (error) {
+        //setHeader("Content-Type", "text/JSON")
+        return res
+          .status(400)
+          .setHeader("Content-Type", "text/JSON")
+          .send({ status: false, message: error.message });
+      }
+ */
         if(!token){
             return res.status(400).send({status:false , message:"Plz enter a token"})
         }
-        let splitToken = token.split(' ')
+        let splitToken = token.split(' ')     // [ brearer, token ]
         let decodedToken = jwt.verify(splitToken[1], "projectfivegroup30")
         //check decoded Token
         if(!decodedToken){
