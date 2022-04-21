@@ -6,7 +6,7 @@ const authentication = async function  (req, res , next)
     try {
         const token = req.header('Authorization', 'Bearer Token')
         if(!token){
-            return res.status(400).send({status:false , message:"Plz enter a token"})
+            return res.status(401).send({status:false , message:"Plz enter a token"})
         }
         let splitToken = token.split(' ')
         let decodedToken = jwt.verify(splitToken[1], "projectfivegroup30")
