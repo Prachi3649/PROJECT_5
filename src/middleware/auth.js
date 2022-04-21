@@ -16,7 +16,7 @@ const authentication = async function  (req, res , next)
       }
  */
         if(!token){
-            return res.status(400).send({status:false , message:"Plz enter a token"})
+            return res.status(401).send({status:false , message:"Plz enter a token"})
         }
         let splitToken = token.split(' ')     // [ brearer, token ]
         let decodedToken = jwt.verify(splitToken[1], "projectfivegroup30")
