@@ -30,7 +30,7 @@ const userAuthorization = async function(req, res, next){
     if(!token){
         return res.status(400).send({status:false , message:"Plz enter a token"})
     }
-    let splitToken = token.split(' ')
+    let splitToken = token.split(' ') // [bearer , token]
     let decodedToken = jwt.verify(splitToken[1], "projectfivegroup30")
     let userId = req.params.userId;
     let DuserId = decodedToken.userId;
