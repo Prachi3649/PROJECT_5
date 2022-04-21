@@ -228,8 +228,8 @@ const updateCart = async (req, res) => {
                              { items: getCart.items, totalItems: totalItems1, totalPrice: priceUpdate }, { new: true })
                         return res.status(200).send({ status: true, data: response })
                     }
-                } else {
-                    return res.status(400).send({ status: false, message: `product doesnot exist` })
+                // } else {
+                //     return res.status(400).send({ status: false, message: `product doesnot exist` })
                 }
             }
             
